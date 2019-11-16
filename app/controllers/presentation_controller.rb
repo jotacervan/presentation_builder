@@ -32,6 +32,6 @@ class PresentationController < ApplicationController
     end
 
     def presentation_params
-      params.require(:presentation).permit(:name, :description, :status :user_id)
+      params.require(:presentation).permit(:name, :description, :status, :user_id)
     end
 end
