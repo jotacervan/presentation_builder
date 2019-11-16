@@ -16,6 +16,7 @@ jobs:
     - name: Build and test with Rake
       run: |
         gem install bundler
+        gem install pg -v '1.1.4' --source 'https://rubygems.org/'
         bundle install --jobs 4 --retry 3
         rails db:create db:migrate
         rspec
