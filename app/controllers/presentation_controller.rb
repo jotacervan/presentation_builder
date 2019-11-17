@@ -1,4 +1,5 @@
 class PresentationController < ApplicationController
+  respond_to :json
   before_action :authenticate_user!
   before_action :set_presentation, only: [:show, :update, :destroy]
 
