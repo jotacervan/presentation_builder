@@ -8,8 +8,18 @@ import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import api from '../../services/api';
 
 export default function MenuDrawer({classes, open, handleDrawerClose}){
+
+  function Logout() {
+    api.delete('/users/sign_out').then(res => {
+      location.reload();
+    }).catch(res => {
+      console.log(res);
+    })
+  }
+
   return(
     <Drawer
       className={classes.drawer}
@@ -27,18 +37,18 @@ export default function MenuDrawer({classes, open, handleDrawerClose}){
       </div>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button component="a" href="/app"  >
           <ListItemIcon><InboxIcon /></ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component="a" href="/app/new" >
           <ListItemIcon><InboxIcon /></ListItemIcon>
           <ListItemText primary="New Presentation" />
         </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button onClick={Logout} >
           <ListItemIcon><InboxIcon /></ListItemIcon>
           <ListItemText primary="Logout" />
         </ListItem>

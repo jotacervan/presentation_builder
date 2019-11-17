@@ -11,6 +11,8 @@ export default function Dashboard() {
     useEffect(() => {
       api.get('/presentation').then(res => {
         setPresentations(res.data);
+      }).catch(res => {
+        console.log('Unable to load presentation')
       })
     }, [])
 
