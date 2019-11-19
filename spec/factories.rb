@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :user do
-    id { 1 }
     name { "Test user" }
     email { "test@gmail.com" }
     password { "test4123" }
@@ -10,7 +9,6 @@ FactoryBot.define do
   end
 
   factory :presentation do
-    id { 1 }
     name { "Presentation test" }
     description { "<p>Awesome presentation</p>" }
     status { 1 }
