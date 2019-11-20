@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_11_16_170921) do
   create_table "presentations", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.integer "status", default: 1
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
