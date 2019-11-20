@@ -12,6 +12,18 @@ RSpec.describe SlideController, type: :controller do
       sign_in @user
     end
 
+    describe "POST #pdf_upload" do
+      it "returns http success" do
+        get :pdf_upload, params: { id: @presentation.id, file: fixture_file_upload(Rails.root.join('spec', 'files', 'example.pdf'), 'application/pdf') }
+        expect(response).to have_http_status(:success)
+      end
+      it "change slide count by +5" do
+        expect{
+          get :pdf_upload, params: { id: @presentation.id, file: fixture_file_upload(Rails.root.join('spec', 'files', 'example.pdf'), 'application/pdf') }
+        }.to change(Slide,:count).by(+5)
+      end
+    end
+
     describe "GET #index" do
       it "returns http success" do
         get :index, params: { id: @presentation.id }
@@ -26,7 +38,7 @@ RSpec.describe SlideController, type: :controller do
       end
     end
 
-    describe "GET #create" do
+    describe "POST #create" do
       it "returns http success" do
         post :create, params: { slide: {order: 1, presentation_id: @presentation.id, image: @file } }
         expect(response).to have_http_status(:created)
@@ -45,7 +57,7 @@ RSpec.describe SlideController, type: :controller do
       end
     end
 
-    describe "GET #update" do
+    describe "PUT #update" do
       it "returns http success" do
         put :update, params: { id: @slide.id, slide: {order: 1, image: @file2} }
         expect(response).to have_http_status(:success)
@@ -62,7 +74,7 @@ RSpec.describe SlideController, type: :controller do
       end
     end
 
-    describe "GET #destroy" do
+    describe "DELETE #destroy" do
       it "returns http success" do
         delete :destroy, params: { id: @slide.id }
         expect(response).to have_http_status(:success)

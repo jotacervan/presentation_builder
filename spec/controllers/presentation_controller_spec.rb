@@ -22,7 +22,7 @@ RSpec.describe PresentationController, type: :controller do
       end
     end
 
-    describe "GET #create" do
+    describe "POST #create" do
       context "with valid params" do
         it "returns http success" do
           post :create, params: { presentation: { name: 'Test 1', user_id: @user.id } }
@@ -45,7 +45,7 @@ RSpec.describe PresentationController, type: :controller do
       end
     end
 
-    describe "GET #update" do
+    describe "PUT #update" do
       context "with valid params" do
         it "returns http success" do
           put :update, params: { id: @presentation, presentation: { name: 'Test 2' } }
@@ -75,7 +75,7 @@ RSpec.describe PresentationController, type: :controller do
 
     end
 
-    describe "GET #destroy" do
+    describe "DELETE #destroy" do
       it "returns http success" do
         delete :destroy, params: { id: @presentation }
         expect(response).to have_http_status(:success)
