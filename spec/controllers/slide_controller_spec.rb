@@ -7,21 +7,10 @@ RSpec.describe SlideController, type: :controller do
       @user = @presentation.user
       @slide = create(:slide, presentation: @presentation)
       @file = fixture_file_upload(Rails.root.join('spec', 'files', '640x360.png'), 'image/png')
+      @pdf = fixture_file_upload(Rails.root.join('spec', 'files', 'example.pdf'), 'application/pdf')
       @file2 = fixture_file_upload(Rails.root.join('spec', 'files', '350x350.png'), 'image/png')
       @audio = fixture_file_upload(Rails.root.join('spec', 'files', 'audio.mp3'), 'audio/mpeg3')
       sign_in @user
-    end
-
-    describe "POST #pdf_upload" do
-      it "returns http success" do
-        get :pdf_upload, params: { id: @presentation.id, file: fixture_file_upload(Rails.root.join('spec', 'files', 'example.pdf'), 'application/pdf') }
-        expect(response).to have_http_status(:success)
-      end
-      it "change slide count by +5" do
-        expect{
-          get :pdf_upload, params: { id: @presentation.id, file: fixture_file_upload(Rails.root.join('spec', 'files', 'example.pdf'), 'application/pdf') }
-        }.to change(Slide,:count).by(+5)
-      end
     end
 
     describe "GET #index" do
@@ -65,12 +54,12 @@ RSpec.describe SlideController, type: :controller do
       it "update file" do
         put :update, params: { id: @slide.id, slide: {order: 1, image: @file2} }
         @slide.reload
-        expect(@slide.image.filename.to_s).to eq('350x350.png')
+        expect(@slide.image.file.filename).to eq('350x350.png')
       end
       it "update audio" do
         put :update, params: { id: @slide.id, slide: {order: 1, image: @file2, audio: @audio} }
         @slide.reload
-        expect(@slide.audio.filename.to_s).to eq('audio.mp3')
+        expect(@slide.audio.file.filename).to eq('audio.mp3')
       end
     end
 

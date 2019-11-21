@@ -9,7 +9,7 @@ class PresentationController < ApplicationController
   end
 
   def show
-    render json: @presentation, status: :ok
+    render json: @presentation.to_json(include: [:slides]), status: :ok
   end
 
   def create

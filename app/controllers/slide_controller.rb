@@ -2,10 +2,16 @@ class SlideController < ApplicationController
   respond_to :json
   before_action :authenticate_user!
   before_action :set_slide, only: [:show, :update, :destroy]
+  before_action :set_presentation, only: [:index, :pdf_upload]
 
   def index
-    presentation = Presentation.find(params[:id])
-    render json: presentation, status: :ok
+    render json: @presentation.slides, status: :ok
+  end
+
+  def pdf_upload
+    @presentation.update(pdf: params[:pdf])
+    byebug
+    render json: [], status: :ok
   end
 
   def show
@@ -14,12 +20,10 @@ class SlideController < ApplicationController
 
   def create
     slide = Slide.create(slide_params)
-    render json: slide, status: :created
+    render json: Slide.where(presentation_id: slide.presentation_id).order(:order), status: :created
   end
 
   def update
-    @slide.image.purge_later if slide_params[:image].present?
-    @slide.audio.purge_later if slide_params[:audio].present?
     @slide.update(slide_params)
 
     render json: @slide, status: :ok
@@ -38,5 +42,9 @@ class SlideController < ApplicationController
 
     def set_slide
       @slide = Slide.find(params[:id])
+    end
+
+    def set_presentation
+      @presentation = Presentation.find(params[:id])
     end
 end

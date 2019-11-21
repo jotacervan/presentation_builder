@@ -111,7 +111,7 @@ export default function Dashboard() {
           <Grid item xs>
             <Paper className="mainCard">
                 <div className="indicator">{ presentations.length }</div>
-                <div className="description">Presentations</div>
+                <div className="description">Pending</div>
             </Paper>
           </Grid>
         </Grid>

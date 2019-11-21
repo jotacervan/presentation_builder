@@ -1,8 +1,8 @@
 class Slide < ApplicationRecord
+  mount_uploader :image, ImageUploader
+  mount_uploader :audio, AudioUploader
   belongs_to :presentation
-  has_one_attached :image
-  has_one_attached :audio
+  has_paper_trail
 
   validates :order, :image, presence: true
-  validates :image, attached: true
 end

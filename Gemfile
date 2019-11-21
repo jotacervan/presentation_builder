@@ -27,6 +27,9 @@ gem 'react-rails'
 gem 'devise'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'paper_trail'
+
+gem 'carrierwave', '~> 2.0' 
 
 gem 'active_storage_validations'
 
@@ -54,4 +57,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'
