@@ -5,6 +5,20 @@ require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'capybara/poltergeist'
+include ActionDispatch::TestProcess
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {
+    js_errors: false,
+    phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=any'],
+    debug: false,
+    timeout: 500,
+    phantomjs: File.absolute_path(Phantomjs.path)
+  })
+end
+Capybara.javascript_driver = :poltergeist
+Capybara.server_port = 3001
+Capybara.default_max_wait_time = 5
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -39,6 +53,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
